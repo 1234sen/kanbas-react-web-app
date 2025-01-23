@@ -1,3 +1,6 @@
+
+import ReactImage from "../../../assets/react.jpg"
+
 export default function Lab1() {
     return (
       <div id="wd-lab1">
@@ -126,7 +129,7 @@ export default function Lab1() {
   <br />
   Loading a local image:
   <br />
-  <img id="wd-teslabot" src="/public/images/react.jpg" height="200px" />
+  <img src={ReactImage} alt="React Logo" width={200} />
 </div>
 
 <div id="wd-forms">

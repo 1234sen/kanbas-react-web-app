@@ -1,4 +1,6 @@
+import ReactImage from "../assets/react.jpg";
 import { Link } from "react-router-dom";
+
 export default function Dashboard() {
   return (
     <div id="wd-dashboard">
@@ -8,7 +10,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link to="/Kambaz/Courses/1234/Home"
                 className="wd-dashboard-course-link" >
-            <img src="/images/react.jpg" width={200} alt="React Logo" />
+            <img src={ReactImage} alt="React Logo" width={200} />
             <div>
               <h5> CS4550 </h5>
               <p className="wd-dashboard-course-title">
