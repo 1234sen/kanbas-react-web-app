@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function LandingPage() {
   return (
     <div
@@ -15,7 +17,7 @@ function LandingPage() {
       <h1 style={{ margin: "0", padding: "0", marginRight: "30px", color: "black"}}>
         Welcome to Kambaz Application
       </h1>
-      <a href="/labs" style={{ textDecoration: "none", color: "#666666", height: "21px" }}>Lab Exercises</a>
+      <Link to="/labs" style={{ textDecoration: "none", color: "#666666", height: "21px" }}>Lab Exercises</Link>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {HashRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import LabExercises from "./components/LabExercises";
 import "./index.css";
@@ -12,7 +12,7 @@ import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/labs" element={<LabExercises />}>
@@ -22,7 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         </Route>
         <Route path="/Kambaz/*" element={<Kambaz />} /> 
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>
 );
 
