@@ -4,11 +4,12 @@ import {HashRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import LabExercises from "./components/LabExercises";
 import "./index.css";
-import Lab1 from "./components/ Lab1.tsx";
+
 import Lab2 from "./components/Lab2.tsx";
 import Lab3 from "./components/Lab3.tsx";
 import Kambaz from "./Kambaz/index";
 import "./index.css";
+import Lab1 from "./components/Labs/Lab1/index.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
