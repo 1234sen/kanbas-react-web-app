@@ -3,16 +3,20 @@ import ReactDOM from "react-dom/client";
 import {HashRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import LabExercises from "./components/LabExercises";
-import "./index.css";
+// import "./index.css";
 
-import Lab2 from "./components/Lab2.tsx";
-import Lab3 from "./components/Lab3.tsx";
+import Lab2 from "./components/Labs/Lab2/index.tsx";
+import Lab3 from "./components/Labs/Lab3/index.tsx";
 import Kambaz from "./Kambaz/index";
-import "./index.css";
+// import "./index.css";
 import Lab1 from "./components/Labs/Lab1/index.tsx";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.tsx";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
     <HashRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -24,6 +28,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/Kambaz/*" element={<Kambaz />} /> 
       </Routes>
     </HashRouter>
-  </React.StrictMode>
+    </StrictMode>
 );
+
+
 
