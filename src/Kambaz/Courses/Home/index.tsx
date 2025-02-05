@@ -4,16 +4,18 @@ import CourseStatus from "./courseStatus.tsx";
 
 export default function Home() {
     return (
-      <div className="d-flex" id="wd-home">
- <div className="flex-fill me-3">
- <Modules />
- </div>
-
- <div className="d-none d-xl-block">
- <CourseStatus />
- </div>
-</div>
-
+      <table id="wd-home">
+        <tbody>
+          <tr>
+            <td valign="top">
+              <Modules />
+            </td>
+            <td valign="top">
+              <CourseStatus />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     );
   }
   

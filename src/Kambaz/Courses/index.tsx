@@ -4,7 +4,7 @@ import Modules from "./Modules";
 import Home from "./Home/index";
 import Assignments from "./Assignment/index";
 import AssignmentEditor from "./Assignment/Editor.tsx";
-import PeopleTable from './People/Table.tsx'
+
 export default function Courses() {
   return (
     <div id="wd-courses">
@@ -21,10 +21,10 @@ export default function Courses() {
                 <Route path="/" element={<Navigate to="Home" />} />
                 <Route path="Home" element={<Home />} />
                 <Route path="Modules" element={<Modules />} />
-                {/* <Route path="People" element={<h2>People</h2>} /> */}
+                <Route path="People" element={<h2>People</h2>} />
                 <Route path="Assignments" element={<Assignments />} />
                 <Route path="Assignments/:aid" element={<AssignmentEditor />} />
-                <Route path="People" element={<PeopleTable />} />
+
               </Routes>
             </td>
           </tr>
