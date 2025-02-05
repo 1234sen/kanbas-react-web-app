@@ -26,7 +26,7 @@ const BootstrapNavigation = () => (
  Cards
  </h2>
  <Card style={{ width: "18rem" }}>
- <Card.Img variant="top" src={shipImg} />
+ <img src={shipImg} alt="Stacking Starship" width="100%" style={{ borderRadius: "8px" }} />
  <Card.Body>
  <Card.Title>Stacking Starship</Card.Title>
  <Card.Text>
