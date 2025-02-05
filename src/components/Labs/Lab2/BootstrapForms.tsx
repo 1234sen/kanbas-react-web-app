@@ -1,0 +1,171 @@
+import ListGroup from 'react-bootstrap/ListGroup';
+import FormSelect from 'react-bootstrap/FormSelect'
+import FormGroup from 'react-bootstrap/FormGroup';
+import FormLabel from 'react-bootstrap/FormLabel'
+import FormRange from 'react-bootstrap/FormRange'
+import Form from 'react-bootstrap/Form'
+import InputGroup from 'react-bootstrap/InputGroup'
+import FormControl from 'react-bootstrap/FormControl'
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button'
+const BootstrapForms = () => (
+    <div id="wd-css-hyperlink-list">
+ <h3>Favorite books</h3>
+ <ListGroup>
+ <ListGroup.Item action active
+ href="https://en.wikipedia.org/wiki/Dune_(novel)">
+ Dune </ListGroup.Item>
+ <ListGroup.Item action
+ href="https://en.wikipedia.org/wiki/The_Lord_of_the_Rings">
+ Lord of the Rings </ListGroup.Item>
+ <ListGroup.Item action
+ href="https://en.wikipedia.org/wiki/The_Forever_War">
+ The Forever War </ListGroup.Item>
+ <ListGroup.Item action
+ href="https://en.wikipedia.org/wiki/2001:_A_Space_Odyssey_(novel)">
+ 2001 A Space Odyssey </ListGroup.Item>
+ <ListGroup.Item action disabled
+ href="https://en.wikipedia.org/wiki/Ender%27s_Game">
+ Ender's Game </ListGroup.Item>
+ <ListGroup.Item action onClick={() => alert("New book added")}>
+ Add another book </ListGroup.Item>
+ </ListGroup>
+ <div id="wd-css-styling-dropdowns">
+ <h3>Select</h3>
+ <FormSelect>
+ <option selected>Open this select menu</option>
+ <option value="1">One</option>
+ <option value="2">Two</option>
+ <option value="3">Three</option>
+ </FormSelect>
+</div>
+
+<div id="wd-css-styling-switches">
+ <h3>Switches</h3>
+ <Form.Check type="switch" checked=
+{false} id="wd-switch-1"
+ label="Unchecked switch
+checkbox input"/>
+ <Form.Check type="switch" checked={true}
+id="wd-switch-2"
+ label="Checked switch checkbox
+input"/>
+ <Form.Check type="switch" checked=
+{false} disabled
+ id="custom-switch"
+ label="Unchecked disabled
+switch checkbox input"/>
+ <Form.Check type="switch" checked=
+{true} disabled
+ id="custom-switch"
+ label="Checked disabled switch
+checkbox input"/>
+</div>
+
+<div id="wd-css-styling-range-and-sliders">
+ <h3>Range</h3>
+ <FormGroup controlId="wd-range1">
+ <FormLabel>Example range</FormLabel>
+ 
+<FormRange min="0" max="5" step="0.5" />
+ </FormGroup>
+</div>
+
+<div id="wd-css-styling-addons">
+ <h3>Addons</h3>
+ <InputGroup className="mb-3">
+ 
+<InputGroup.Text>$</InputGroup.Text>
+<InputGroup.Text>0.00</InputGroup.Text>
+ <FormControl />
+ </InputGroup>
+ <InputGroup>
+ <FormControl />
+ 
+<InputGroup.Text>$</InputGroup.Text>
+ 
+<InputGroup.Text>0.00</InputGroup.Text>
+ </InputGroup>
+</div>
+
+<div id="wd-css-responsive-forms-1">
+ <h3>Responsive forms</h3>
+ <Form.Group as={Row} className="mb-
+3" controlId="email1">
+ <Form.Label column sm={2}>
+ Email
+ </Form.Label>
+ <Col sm={10}>
+ 
+<Form.Control type="email" value="email@example.com" />
+ </Col>
+</Form.Group>
+ <Form.Group as={Row} className="mb-
+3" controlId="password1">
+ <Form.Label column sm={2}>
+ Password
+ </Form.Label>
+ <Col sm={10}>
+ <Form.Control type="password" />
+ </Col>
+</Form.Group>
+ <Form.Group as={Row} className="mb-
+3" controlId="textarea2">
+ <Form.Label column sm={2}>
+ Bio
+ </Form.Label>
+ <Col sm={10}>
+ <Form.Control as="textarea" style={{height:
+"100px"}}/>
+ </Col>
+</Form.Group>
+</div>
+
+<div id="wd-css-responsive-forms-2">
+ <h3>Responsive forms</h3>
+ <Form>
+ <Form.Group as={Row} className="mb-3">
+ <Form.Label column sm={2}> Email </Form.Label>
+ <Col sm={10}>
+ <Form.Control type="email" placeholder="Email" />
+ </Col>
+ </Form.Group>
+ <Form.Group as={Row} className="mb-3">
+ <Form.Label column sm={2}> Password </Form.Label>
+ <Col sm={10}>
+ 
+<Form.Control type="password" placeholder="Password" />
+ </Col>
+ </Form.Group>
+ <fieldset>
+ <Form.Group as={Row} className="mb-3">
+ <Form.Label as="legend" column sm={2}>
+ Radios </Form.Label>
+ <Col sm={10}>
+ <Form.Check type="radio" label="first radio"
+ checked name="formHorizontalRadios"/>
+ <Form.Check type="radio" label="second radio"
+ name="formHorizontalRadios"/>
+ <Form.Check type="radio" label="third radio"
+ name="formHorizontalRadios"/>
+ </Col>
+ </Form.Group>
+ </fieldset>
+ <Form.Group as={Row} className="mb-3">
+ <Col sm={{ span: 10, offset: 2 }}>
+ <Form.Check label="Remember me" />
+ </Col>
+ </Form.Group>
+ <Form.Group as={Row} className="mb-3">
+ <Col>
+ <Button type="submit">Sign in</Button>
+ </Col>
+ </Form.Group>
+</Form>
+</div>
+
+</div>
+    );
+    
+    export default BootstrapForms;
