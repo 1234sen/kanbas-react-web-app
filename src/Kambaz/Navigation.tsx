@@ -3,7 +3,7 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { LiaBookSolid, LiaCogSolid } from "react-icons/lia";
 import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import logoimg from '../assets/logo.jpg';
+import logoimg from '../assets/logo.jpg'
 
 export default function KambazNavigation() {
   return (

@@ -1,7 +1,7 @@
 import Nav from 'react-bootstrap/Nav';
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
-import shipImg from '../../../assets/ship.jpg';
+import shipimg from '../../../assets/ship.jpg'
 
 const BootstrapNavigation = () => (
     <div id="wd-css-navigating-with-tabs">
@@ -26,7 +26,7 @@ const BootstrapNavigation = () => (
  Cards
  </h2>
  <Card style={{ width: "18rem" }}>
- <img src={shipImg} alt="Stacking Starship" width="100%" style={{ borderRadius: "8px" }} />
+ <Card.Img variant="top" src={shipimg} />
  <Card.Body>
  <Card.Title>Stacking Starship</Card.Title>
  <Card.Text>
