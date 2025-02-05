@@ -3,6 +3,7 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { LiaBookSolid, LiaCogSolid } from "react-icons/lia";
 import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import logoimg from '../assets/logo.jpg';
 
 export default function KambazNavigation() {
   return (
@@ -11,7 +12,7 @@ export default function KambazNavigation() {
  href="https://www.northeastern.edu/"
  className="list-group-item bg-black border-0
 text-center">
- <img src="/src/assets/logo.jpg" width="75px" /></a>
+ <img src={logoimg} width="75px" /></a>
  <Link to="/Kambaz/Account" id="wd-account-link"
  className="list-group-item text-center border-0
 bg-black text-white">

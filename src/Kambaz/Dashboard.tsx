@@ -4,6 +4,9 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
+import reactimg from '../assets/react.jpg';
+
+
 export default function Dashboard() {
   return (
     <div id="wd-dashboard">
@@ -15,7 +18,7 @@ export default function Dashboard() {
  <Card>
  <Link to="/Kambaz/Courses/1234/Home"
  className="wd-dashboard-course-link text-decoration-none text-dark">
- <Card.Img variant="top" src="/src/assets/react.jpg" width="100%" height={160}/>
+ <Card.Img variant="top" src={reactimg} width="100%" height={160}/>
  <Card.Body>
  <Card.Title className="wd-dashboard-course-title">CS1234 React JS</Card.Title>
  <Card.Text className="wd-dashboard-course-description">Full Stack software
