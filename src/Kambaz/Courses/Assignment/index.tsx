@@ -29,7 +29,7 @@ export default function Assignments() {
       <ul className="wd-assignment-list">
         <li className="wd-assignment-list-item">
           <div>
-            <svg t="1739776740111" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4572" width="15" height="15"><path d="M170.666667 345.6l243.2-243.2 59.733333 59.733333L256 384v349.866667h512v-298.666667h-256v-85.333333h341.333333v469.333333H170.666667V345.6z m298.666666 128h85.333334v85.333333h-85.333334v-85.333333z" fill="#1afa29" p-id="4573"></path></svg>
+            <svg className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4572" width="15" height="15"><path d="M170.666667 345.6l243.2-243.2 59.733333 59.733333L256 384v349.866667h512v-298.666667h-256v-85.333333h341.333333v469.333333H170.666667V345.6z m298.666666 128h85.333334v85.333333h-85.333334v-85.333333z" fill="#1afa29" p-id="4573"></path></svg>
           </div>
           <div>
             <Link
@@ -55,7 +55,7 @@ export default function Assignments() {
         </li>
         <li className="wd-assignment-list-item">
           <div>
-            <svg t="1739776740111" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4572" width="15" height="15"><path d="M170.666667 345.6l243.2-243.2 59.733333 59.733333L256 384v349.866667h512v-298.666667h-256v-85.333333h341.333333v469.333333H170.666667V345.6z m298.666666 128h85.333334v85.333333h-85.333334v-85.333333z" fill="#1afa29" p-id="4573"></path></svg>
+            <svg className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4572" width="15" height="15"><path d="M170.666667 345.6l243.2-243.2 59.733333 59.733333L256 384v349.866667h512v-298.666667h-256v-85.333333h341.333333v469.333333H170.666667V345.6z m298.666666 128h85.333334v85.333333h-85.333334v-85.333333z" fill="#1afa29" p-id="4573"></path></svg>
           </div>
           <div>
             <Link
@@ -80,7 +80,7 @@ export default function Assignments() {
         </li>
         <li className="wd-assignment-list-item">
           <div>
-            <svg t="1739776740111" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4572" width="15" height="15"><path d="M170.666667 345.6l243.2-243.2 59.733333 59.733333L256 384v349.866667h512v-298.666667h-256v-85.333333h341.333333v469.333333H170.666667V345.6z m298.666666 128h85.333334v85.333333h-85.333334v-85.333333z" fill="#1afa29" p-id="4573"></path></svg>
+            <svg className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4572" width="15" height="15"><path d="M170.666667 345.6l243.2-243.2 59.733333 59.733333L256 384v349.866667h512v-298.666667h-256v-85.333333h341.333333v469.333333H170.666667V345.6z m298.666666 128h85.333334v85.333333h-85.333334v-85.333333z" fill="#1afa29" p-id="4573"></path></svg>
           </div>
           <div>
             <Link
