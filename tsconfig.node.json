@@ -16,7 +16,15 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* Path mapping */
+    "baseUrl": "./",
+    "paths": {
+      "Kambaz/*": ["src/Kambaz/*"],
+      "*": ["src/*"]
+    }
   },
   "include": ["vite.config.ts"]
 }
+

@@ -1,164 +1,114 @@
 import { useState } from "react";
+import "./editor.css";
 
 export default function AssignmentEditor() {
   const [assignmentName, setAssignmentName] = useState("A1 - ENV + HTML");
   const [description, setDescription] = useState(
-    "The assignment is available online. Submit a link to the landing page of your web application running on Netlify. The landing page should include the following:\n\n1. Your full name and section\n2. Links to each of the lab assignments\n3. Link to the Kanbaz application\n4. Links to all relevant source code repositories\n\nThe Kanbaz application should include a link to navigate back to the landing page."
+    "The assignment is available online. Submit a link to the landing page of your web application running on Netlify. The landing page should include the following:\n\n• Your full name and section\n• Links to each of the lab assignments\n• Link to the Kanbas application\n• Links to all relevant source code repositories\n\nThe Kanbas application should include a link to navigate back to the landing page."
   );
   const [points, setPoints] = useState(100);
   const [assignmentGroup, setAssignmentGroup] = useState("ASSIGNMENTS");
   const [gradeType, setGradeType] = useState("Percentage");
   const [submissionType, setSubmissionType] = useState("Online");
+  const [assignTo, setAssignTo] = useState("Everyone");
   const [dueDate, setDueDate] = useState("2024-05-13");
   const [availableFrom, setAvailableFrom] = useState("2024-05-06");
   const [availableUntil, setAvailableUntil] = useState("2024-05-20");
 
   return (
-    <div id="wd-assignments-editor">
-      <h2>Assignment Name</h2>
-      <input
-        id="wd-name"
-        value={assignmentName}
-        onChange={(e) => setAssignmentName(e.target.value)}
-      />
-      <br />
-      <br />
-      <textarea
-        id="wd-description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      <br />
-      <table>
-        <tbody>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-points">Points</label>
-            </td>
-            <td>
+    <div className="wd-assignments-editor">
+      <div className="wd-assignment-name-section">
+        <label>Assignment Name</label>
+        <input
+          className="wd-assignment-name-input"
+          value={assignmentName}
+          onChange={(e) => setAssignmentName(e.target.value)}
+        />
+      </div>
+
+      <div className="wd-assignment-description">
+        <div className="wd-description-text">
+          <p>
+            The assignment is <span className="available-online">available online</span>
+          </p>
+          <p>
+            Submit a link to the landing page of your web application running on
+            Netlify.
+          </p>
+          <p>The landing page should include the following:</p>
+          <ul>
+            <li>Your full name and section</li>
+            <li>Links to each of the lab assignments</li>
+            <li>Link to the Kanbas application</li>
+            <li>Links to all relevant source code repositories</li>
+          </ul>
+          <p>
+            The Kanbas application should include a link to navigate back to the
+            landing page.
+          </p>
+        </div>
+      </div>
+
+      <div className="wd-points-section">
+        <label>Points</label>
+        <input
+          type="number"
+          className="wd-points-input"
+          value={points}
+          onChange={(e) => setPoints(Number(e.target.value))}
+        />
+      </div>
+
+      <div className="wd-assign-section">
+        <h3>Assign</h3>
+        <div className="wd-assign-group">
+          <div className="wd-assign-item">
+            <label>Assign to</label>
+            <input
+              className="wd-text-input"
+              value={assignTo}
+              onChange={(e) => setAssignTo(e.target.value)}
+            />
+          </div>
+
+          <div className="wd-assign-item">
+            <label>Due</label>
+            <input
+              type="date"
+              className="wd-text-input"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+            />
+          </div>
+
+          <div className="wd-assign-dates">
+            <div className="wd-assign-item wd-date-item">
+              <label>Available from</label>
               <input
-                id="wd-points"
-                type="number"
-                value={points}
-                onChange={(e) => setPoints(Number(e.target.value))}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-assignment-group">Assignment Group</label>
-            </td>
-            <td>
-              <select
-                id="wd-assignment-group"
-                value={assignmentGroup}
-                onChange={(e) => setAssignmentGroup(e.target.value)}
-              >
-                <option>ASSIGNMENTS</option>
-                <option>QUIZZES</option>
-                <option>PROJECTS</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-grade-type">Display Grade as</label>
-            </td>
-            <td>
-              <select
-                id="wd-grade-type"
-                value={gradeType}
-                onChange={(e) => setGradeType(e.target.value)}
-              >
-                <option>Percentage</option>
-                <option>Complete/Incomplete</option>
-                <option>Letter Grade</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-submission-type">Submission Type</label>
-            </td>
-            <td>
-              <select
-                id="wd-submission-type"
-                value={submissionType}
-                onChange={(e) => setSubmissionType(e.target.value)}
-              >
-                <option>Online</option>
-                <option>On Paper</option>
-                <option>No Submission</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">Online Entry Options</td>
-            <td>
-              <label>
-                <input type="checkbox" /> Text Entry
-              </label>
-              <br />
-              <label>
-                <input type="checkbox" /> Website URL
-              </label>
-              <br />
-              <label>
-                <input type="checkbox" /> Media Recordings
-              </label>
-              <br />
-              <label>
-                <input type="checkbox" /> Student Annotation
-              </label>
-              <br />
-              <label>
-                <input type="checkbox" /> File Uploads
-              </label>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">Assign to</td>
-            <td>
-              <input id="wd-assign-to" defaultValue="Everyone" />
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">Due</td>
-            <td>
-              <input
-                id="wd-due-date"
                 type="date"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">Available from</td>
-            <td>
-              <input
-                id="wd-available-from"
-                type="date"
+                className="wd-text-input"
                 value={availableFrom}
                 onChange={(e) => setAvailableFrom(e.target.value)}
               />
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">Until</td>
-            <td>
+            </div>
+
+            <div className="wd-assign-item wd-date-item">
+              <label>Until</label>
               <input
-                id="wd-available-until"
                 type="date"
+                className="wd-text-input"
                 value={availableUntil}
                 onChange={(e) => setAvailableUntil(e.target.value)}
               />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <br />
-      <button>Cancel</button> <button>Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="wd-button-group">
+        <button className="wd-button wd-button-cancel">Cancel</button>
+        <button className="wd-button wd-button-save">Save</button>
+      </div>
     </div>
   );
 }
