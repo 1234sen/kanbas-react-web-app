@@ -1,13 +1,15 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import reactLogo from './assets/react.jpg'
 import viteLogo from '/vite.svg'
 import './App.css'
-
+import store from "./Kambaz/store";
+import { Provider } from "react-redux";
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
+    <><Provider store={store}>
+
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -28,6 +30,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      </Provider>
     </>
   )
 }
