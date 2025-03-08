@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import "./editor.css";
 
 export default function AssignmentEditor() {
+  const { aid } = useParams();
+  const navigate = useNavigate();
+  const isNewAssignment = aid === "new";
+
   const [assignmentName, setAssignmentName] = useState("A1");
   const [description, setDescription] = useState(
     "The assignment is available online. Submit a link to the landing page of your web application running on Netlify. The landing page should include the following:\n\n• Your full name and section\n• Links to each of the lab assignments\n• Link to the Kanbas application\n• Links to all relevant source code repositories\n\nThe Kanbas application should include a link to navigate back to the landing page."
@@ -14,6 +19,53 @@ export default function AssignmentEditor() {
   const [dueDate, setDueDate] = useState("May 13, 2024, 11:59 PM");
   const [availableFrom, setAvailableFrom] = useState("May 6, 2024, 12:00 AM");
   const [availableUntil, setAvailableUntil] = useState("");
+
+  useEffect(() => {
+    if (!isNewAssignment && aid) {
+      const storedAssignments = JSON.parse(localStorage.getItem('assignments') || '[]');
+      const existingAssignment = storedAssignments.find((a: any) => a._id === aid);
+      if (existingAssignment) {
+        setAssignmentName(existingAssignment.name);
+        setDescription(existingAssignment.description);
+        setPoints(existingAssignment.points);
+        setAssignTo(existingAssignment.assignTo);
+        setDueDate(existingAssignment.dueDate);
+        setAvailableFrom(existingAssignment.availableFrom);
+        setAvailableUntil(existingAssignment.availableUntil);
+      }
+    }
+  }, [aid, isNewAssignment]);
+
+  const handleSave = () => {
+    const assignment = {
+      _id: isNewAssignment ? Date.now().toString() : aid,
+      name: assignmentName,
+      description,
+      points,
+      assignTo,
+      dueDate,
+      availableFrom,
+      availableUntil
+    };
+
+    const storedAssignments = JSON.parse(localStorage.getItem('assignments') || '[]');
+
+    if (isNewAssignment) {
+      storedAssignments.push(assignment);
+    } else {
+      const index = storedAssignments.findIndex((a: any) => a._id === aid);
+      if (index !== -1) {
+        storedAssignments[index] = assignment;
+      }
+    }
+
+    localStorage.setItem('assignments', JSON.stringify(storedAssignments));
+    navigate("../Assignments");
+  };
+
+  const handleCancel = () => {
+    navigate("../Assignments");
+  };
 
   return (
     <div className="wd-assignments-editor">
@@ -106,7 +158,12 @@ export default function AssignmentEditor() {
       </div>
 
       <div className="wd-button-group">
-        <button className="wd-button wd-button-cancel">Cancel</button>
+        <button onClick={handleSave} className="wd-button wd-button-save">
+          Save
+        </button>
+        <button onClick={handleCancel} className="wd-button wd-button-cancel">
+          Cancel
+        </button>
       </div>
     </div>
   );
