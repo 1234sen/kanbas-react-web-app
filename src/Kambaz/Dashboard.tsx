@@ -1,93 +1,138 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Card from 'react-bootstrap/Card'
-import Button from 'react-bootstrap/Button'
-import reactimg from '../assets/react.jpg'
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Row, Col, Card, Button } from "react-bootstrap";
 import * as db from "./Database";
-import { v4 as uuidv4 } from "uuid";
-import { FormControl } from 'react-bootstrap'; // 添加导入语句
-import { useSelector } from 'react-redux'; 
+import { toggleShowAllCourses, enrollInCourse, unenrollFromCourse } from "../reducers/enrollmentReducer";
 
-export default function Dashboard(
-{ courses, course, setCourse, addNewCourse,
-    deleteCourse, updateCourse }: {
-    courses: any[]; course: any; setCourse: (course: any) => void;
-    addNewCourse: () => void; deleteCourse: (course: any) => void;
-    updateCourse: () => void; })
-   {
-    const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const { enrollments } = db;
+export default function Dashboard({
+  courses,
+  course,
+  setCourse,
+  addNewCourse,
+  deleteCourse,
+  updateCourse
+}: {
+  courses: any[];
+  course: any;
+  setCourse: (course: any) => void;
+  addNewCourse: () => void;
+  deleteCourse: (course: any) => void;
+  updateCourse: () => void;
+}) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const { showAllCourses, enrollments } = useSelector((state: any) => state.enrollmentReducer);
 
+  const isStudent = currentUser?.role === "STUDENT";
+  const isEnrolled = (courseId: string) =>
+    enrollments.some((e: any) => e.user === currentUser?._id && e.course === courseId);
 
-    return (
-      <div id="wd-dashboard">
- <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
- <h5>New Course
-          <button className="btn btn-primary float-end"
-                  id="wd-add-new-course-click"
-                  onClick={addNewCourse} > Add </button>
-                  <button className="btn btn-warning float-end me-2"
-                onClick={updateCourse} id="wd-update-course-click">
-          Update
-        </button>
+  const displayedCourses = isStudent && !showAllCourses
+    ? courses.filter(course => isEnrolled(course._id))
+    : courses;
 
-      </h5><br />
+  const handleEnrollToggle = (courseId: string) => {
+    if (isEnrolled(courseId)) {
+      dispatch(unenrollFromCourse({ userId: currentUser._id, courseId }));
+    } else {
+      dispatch(enrollInCourse({ userId: currentUser._id, courseId }));
+    }
+  };
+  console.log('isStudent', isStudent)
+  return (
+    <div id="wd-dashboard">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h1>Dashboard</h1>
+        {isStudent && (
+          <Button
+            variant="primary"
+            onClick={() => dispatch(toggleShowAllCourses())}
+          >
+            {showAllCourses ? "Show Enrolled" : "Show All Courses"}
+          </Button>
+        )}
+      </div>
 
-      <FormControl value={course.name} className="mb-2" onChange={(e) => setCourse({ ...course, name: e.target.value }) } />
+      {!isStudent && (
+        <div className="mb-4">
+          <h5>
+            New Course
+            <Button onClick={addNewCourse} className="float-end">Add</Button>
+            <Button onClick={updateCourse} className="float-end me-2" variant="warning">
+              Update
+            </Button>
+          </h5>
+          {/* Course editing form */}
+        </div>
+      )}
 
-      <FormControl as="textarea"  value={course.description} rows={3}onChange={(e) => setCourse({ ...course, description: e.target.value }) } />
-
-<hr />
-
- <h2 id="wd-dashboard-published">Published Courses  ({courses.length})</h2> <hr />
- <div id="wd-dashboard-courses">
-        <Row xs={1} md={5} className="g-4">
-        {courses
-    .filter((course) =>
-      enrollments.some(
-        (enrollment) =>
-          enrollment.user === currentUser._id &&
-          enrollment.course === course._id
-         )).map((course) => (
-
-            <Col className="wd-dashboard-course" style={{ width: "300px" }}>
-              <Card>
-                <Link to={`/Kambaz/Courses/${course._id}/Home`}
-                      className="wd-dashboard-course-link text-decoration-none text-dark" >
-                  <Card.Img src={reactimg} variant="top" width="100%" height={160} />
-                  <Card.Body className="card-body">
-                    <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
-                      {course.name} </Card.Title>
-                    <Card.Text className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}>
-                      {course.description} </Card.Text>
-                    <Button variant="primary"> Go </Button>
-                    
-
-                
-
-                    <button onClick={(event) => {
-                      event.preventDefault();
-                      deleteCourse(course._id);
-                    }} className="btn btn-danger float-end"
-                    id="wd-delete-course-click">
-                    Delete
-            </button>
-            <button id="wd-edit-course-click"
-  onClick={(event) => {
-    event.preventDefault();
-    setCourse(course);
-  }}
-  className="btn btn-warning me-2 float-end" >
-  Edit
-</button>
-                  </Card.Body>
-                </Link>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </div></div>
-    ); }
-  
+      <h2>Published Courses ({displayedCourses.length})</h2>
+      <Row xs={1} md={3} lg={4} className="g-4">
+        {displayedCourses.map((course) => (
+          <Col key={course._id}>
+            <Card>
+              <Card.Img variant="top" src="/images/reactjs.jpg" />
+              <Card.Body>
+                <Card.Title>{course.name}</Card.Title>
+                <Card.Text>{course.description}</Card.Text>
+                <div className="d-flex justify-content-between">
+                  {isStudent ? (
+                    <>
+                      {isEnrolled(course._id) ? (
+                        <>
+                          <Button
+                            onClick={() => navigate(`/Kambaz/Courses/${course._id}/Home`)}
+                            variant="primary"
+                          >
+                            Go to Course
+                          </Button>
+                          <Button
+                            onClick={() => handleEnrollToggle(course._id)}
+                            variant="danger"
+                          >
+                            Unenroll
+                          </Button>
+                        </>
+                      ) : (
+                        <Button
+                          onClick={() => handleEnrollToggle(course._id)}
+                          variant="success"
+                          className="w-100"
+                        >
+                          Enroll
+                        </Button>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        onClick={() => navigate(`/Kambaz/Courses/${course._id}/Home`)}
+                        variant="primary"
+                      >
+                        Go to Course
+                      </Button>
+                      <Button
+                        onClick={() => deleteCourse(course._id)}
+                        variant="danger"
+                      >
+                        Delete
+                      </Button>
+                      <Button
+                        onClick={() => setCourse(course)}
+                        variant="warning"
+                      >
+                        Edit
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </div>
+  );
+} 
