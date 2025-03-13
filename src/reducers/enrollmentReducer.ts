@@ -15,7 +15,7 @@ const enrollmentSlice = createSlice({
         },
         enrollInCourse: (state, action) => {
             const newEnrollment = {
-                _id: Data.now().toString(), //add only ID
+                _id: Date.now().toString(), //add only ID
                 user: action.payload.userId,
                 course: action.payload.courseId,
             };
