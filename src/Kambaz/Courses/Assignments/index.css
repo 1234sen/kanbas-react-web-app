@@ -1,0 +1,66 @@
+.assignments-container {
+  padding: 20px;
+}
+
+.assignments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.assignment-card {
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.assignment-card-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.assignment-title {
+  font-weight: 500;
+  font-size: 18px;
+  margin: 0;
+}
+
+.assignment-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.assignment-date {
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.assignment-content {
+  padding: 15px;
+}
+
+.assignment-description {
+  margin-bottom: 10px;
+}
+
+.assignment-points {
+  font-weight: 500;
+  color: #007bff;
+}
+
+.btn-add-assignment {
+  margin-bottom: 20px;
+}
+
+.no-assignments {
+  text-align: center;
+  padding: 30px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-top: 20px;
+} 

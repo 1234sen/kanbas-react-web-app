@@ -1,39 +1,38 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Button } from "react-bootstrap";
+import { setAssignments, deleteAssignment } from "./reducer";
+import * as client from "./client";
 import "./index.css";
 
-interface Assignment {
-  _id: string;
-  name: string;
-  description: string;
-  points: number;
-  dueDate: string;
-  availableFromDate: string;
-  availableUntilDate: string;
-}
-
 export default function Assignments() {
+  const { cid } = useParams();
   const navigate = useNavigate();
-  const [assignments, setAssignments] = useState<Assignment[]>([]);
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const dispatch = useDispatch();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState<string | null>(null);
 
+  const fetchAssignments = async () => {
+    if (!cid) return;
+    const data = await client.findAssignmentsForCourse(cid);
+    dispatch(setAssignments(data));
+  };
+
   useEffect(() => {
-    // 从本地存储加载作业
-    const storedAssignments = JSON.parse(localStorage.getItem('assignments') || '[]');
-    setAssignments(storedAssignments);
-  }, []);
+    fetchAssignments();
+  }, [cid]);
 
   const handleDelete = (assignmentId: string) => {
     setSelectedAssignment(assignmentId);
     setShowDeleteDialog(true);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (selectedAssignment) {
-      const updatedAssignments = assignments.filter(a => a._id !== selectedAssignment);
-      setAssignments(updatedAssignments);
-      localStorage.setItem('assignments', JSON.stringify(updatedAssignments));
+      await client.deleteAssignment(selectedAssignment);
+      dispatch(deleteAssignment(selectedAssignment));
       setShowDeleteDialog(false);
       setSelectedAssignment(null);
     }
@@ -51,7 +50,7 @@ export default function Assignments() {
         </button>
         <button
           className="wd-add-assignment"
-          onClick={() => navigate("new")}
+          onClick={() => navigate(`/Kambaz/Courses/${cid}/Assignments/new`)}
         >
           + Assignment
         </button>
@@ -67,7 +66,7 @@ export default function Assignments() {
       </h3>
 
       <ul className="wd-assignment-list">
-        {assignments.map((assignment) => (
+        {assignments.map((assignment: any) => (
           <li key={assignment._id} className="wd-assignment-list-item">
             <div className="wd-assignment-icon">
               <svg className="icon" viewBox="0 0 1024 1024" width="15" height="15">
@@ -77,16 +76,16 @@ export default function Assignments() {
             </div>
             <div className="wd-assignment-content">
               <Link
-                to={`${assignment._id}`}
+                to={`/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
                 className="wd-assignment-link"
               >
-                {assignment.name}
+                {assignment.title}
               </Link>
               <p className="wd-assignment-info">
                 <span className="wd-not-available">Multiple Modules</span>
-                <span> | Not available until {assignment.availableFromDate} | </span>
+                <span> | Available from {assignment.availableFromDate || 'Not set'} | </span>
                 <br />
-                Due {assignment.dueDate} | {assignment.points} pts
+                Due {assignment.dueDate || 'Not set'} | {assignment.points} pts
               </p>
             </div>
             <div className="wd-assignment-actions">
@@ -117,4 +116,4 @@ export default function Assignments() {
       )}
     </div>
   );
-}
+} 

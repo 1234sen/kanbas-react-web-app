@@ -32,6 +32,7 @@ const LabExercises: React.FC = () => {
         <Link to="lab2" style={{ textDecoration: "none", color: "black" }}>Lab 2</Link>
         <Link to="lab3" style={{ textDecoration: "none", color: "black" }}>Lab 3</Link>
         <Link to="lab4" style={{ textDecoration: "none", color: "black" }}>Lab 4</Link>
+        <Link to="lab5" style={{ textDecoration: "none", color: "black" }}>Lab 5</Link>
         <li><Link to="/Kambaz">Kambaz</Link></li>
       </nav>
       <button
