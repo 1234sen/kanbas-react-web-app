@@ -20,7 +20,7 @@ const sessionOptions = {
   saveUninitialized: false, // 保存未初始化的会话
   //store: new FileStore(),
   cookie: {
-    secure: false, // 开发环境
+    secure: true, // 开发环境
     httpOnly: true,
     sameSite: 'none',
     maxAge: 7 * 24 * 60 * 60 * 1000,
