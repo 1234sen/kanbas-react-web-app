@@ -41,6 +41,7 @@ export default function Dashboard({
         }
     };
     console.log('isStudent', isStudent)
+    console.log(currentUser)
     return (
         <div id="wd-dashboard">
             <div className="d-flex justify-content-between align-items-center mb-4">
