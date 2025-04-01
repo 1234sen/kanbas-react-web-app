@@ -31,6 +31,7 @@ if (process.env.NODE_ENV === "development") {
   // 开发环境使用自签名证书
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 }
+sessionOptions.proxy = true;
 // if (process.env.NODE_ENV !== "development") {
 //   sessionOptions.proxy = true;
 //   sessionOptions.cookie = {
