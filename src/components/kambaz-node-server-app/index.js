@@ -46,7 +46,7 @@ app.use(session(sessionOptions));
 app.use(
   cors({
     credentials: true,
-    origin: process.env.NETLIFY_URL || "http://localhost:5173",
+    origin: process.env.NETLIFY_URL || "https://eatwhite-a5.netlify.app" ||,
     exposedHeaders: ['set-cookie'] // 新增暴露set-cookie头
   })
 );
