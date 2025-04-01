@@ -24,22 +24,21 @@ const sessionOptions = {
     httpOnly: true,
     sameSite: 'none',
     maxAge: 7 * 24 * 60 * 60 * 1000,
-    domain: process.env.NODE_ENV === 'development' ?
-      'localhost' : process.env.NODE_SERVER_DOMAIN
+    domain:'kanbas-react-web-app-jwmi.onrender.com'
   }// 开发环境设为false，生产环境应为true
 };
 if (process.env.NODE_ENV === "development") {
   // 开发环境使用自签名证书
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 }
-if (process.env.NODE_ENV !== "development") {
-  sessionOptions.proxy = true;
-  sessionOptions.cookie = {
-    sameSite: "none",
-    secure: true,
-    domain: process.env.NODE_SERVER_DOMAIN,
-  };
-}
+// if (process.env.NODE_ENV !== "development") {
+//   sessionOptions.proxy = true;
+//   sessionOptions.cookie = {
+//     sameSite: "none",
+//     secure: true,
+//     domain: process.env.NODE_SERVER_DOMAIN,
+//   };
+// }
 
 const app = express();
 app.use(session(sessionOptions));
