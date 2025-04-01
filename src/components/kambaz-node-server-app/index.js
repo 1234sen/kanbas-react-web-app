@@ -25,7 +25,7 @@ const sessionOptions = {
     sameSite: 'none',
     maxAge: 7 * 24 * 60 * 60 * 1000,
     // domain:'kanbas-react-web-app-jwmi.onrender.com'
-     domain:'eatwhite-a5.netlify.app'
+     // domain:'eatwhite-a5.netlify.app'
   }// 开发环境设为false，生产环境应为true
 };
 if (process.env.NODE_ENV === "development") {
