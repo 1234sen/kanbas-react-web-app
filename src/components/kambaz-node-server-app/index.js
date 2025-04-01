@@ -54,7 +54,7 @@ app.use(
 );
 app.all('*', (req, res, next) => {
     const origin = req.headers.origin;
-    res.header('Access-Control-Allow-Origin', 'eatwhite-a5.netlify.app');
+    res.header('Access-Control-Allow-Origin', 'https://eatwhite-a5.netlify.app');
     res.header('Access-Control-Allow-Credentials', 'true');
     // 其他CORS相关设置
     next();
