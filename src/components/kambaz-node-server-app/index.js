@@ -46,7 +46,7 @@ app.use(session(sessionOptions));
 app.use(
   cors({
     credentials: true,
-    origin: process.env.NETLIFY_URL || "https://eatwhite-a5.netlify.app" ,
+    origin: "https://kanbas-react-web-app-jwmi.onrender.com" || "https://eatwhite-a5.netlify.app" ,
     exposedHeaders: ['set-cookie'] // 新增暴露set-cookie头
   })
 );
