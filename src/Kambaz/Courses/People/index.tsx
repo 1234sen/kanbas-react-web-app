@@ -102,9 +102,9 @@ export default function People() {
         );
     }
 
-    const studentCount = people.filter(p => p.role === "STUDENT").length;
-    const facultyCount = people.filter(p => p.role === "FACULTY").length;
-    const taCount = people.filter(p => p.role === "TEACHING_ASSISTANT").length;
+    const studentCount = people.filter((p: { role: string; }) => p.role === "STUDENT").length;
+    const facultyCount = people.filter((p: { role: string; }) => p.role === "FACULTY").length;
+    const taCount = people.filter((p: { role: string; }) => p.role === "TEACHING_ASSISTANT").length;
 
     const PeopleStatus = () => (
         <div id="wd-people-status" style={{ width: "350px" }}>
