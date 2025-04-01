@@ -1,9 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface Enrollment {
+    _id: string;
+    user: string;
+    course: string;
+    role: string;
+    enrollmentDate: string;
+}
+
+interface EnrollmentState {
+    enrollments: Enrollment[];
+    loading: boolean;
+    error: null | string;
+    showAllCourses: boolean;
+}
+
+const initialState: EnrollmentState = {
     enrollments: [],
     loading: false,
-    error: null
+    error: null,
+    showAllCourses: false
 };
 
 const enrollmentSlice = createSlice({
@@ -21,7 +37,7 @@ const enrollmentSlice = createSlice({
         removeEnrollment: (state, action) => {
             const { userId, courseId } = action.payload;
             state.enrollments = state.enrollments.filter(
-                (enrollment: any) => !(enrollment.user === userId && enrollment.course === courseId)
+                (enrollment) => !(enrollment.user === userId && enrollment.course === courseId)
             );
         },
         setLoading: (state) => {
@@ -31,6 +47,31 @@ const enrollmentSlice = createSlice({
         setError: (state, action) => {
             state.loading = false;
             state.error = action.payload;
+        },
+        toggleShowAllCourses: (state) => {
+            state.showAllCourses = !state.showAllCourses;
+        },
+        enrollInCourse: (state, action) => {
+            const { userId, courseId } = action.payload;
+            const exists = state.enrollments.some(
+                (e) => e.user === userId && e.course === courseId
+            );
+            if (!exists) {
+                const newEnrollment: Enrollment = {
+                    user: userId,
+                    course: courseId,
+                    role: "STUDENT",
+                    enrollmentDate: new Date().toISOString(),
+                    _id: new Date().getTime().toString()
+                };
+                state.enrollments.push(newEnrollment);
+            }
+        },
+        unenrollFromCourse: (state, action) => {
+            const { userId, courseId } = action.payload;
+            state.enrollments = state.enrollments.filter(
+                (enrollment) => !(enrollment.user === userId && enrollment.course === courseId)
+            );
         }
     }
 });
@@ -40,7 +81,10 @@ export const {
     addEnrollment,
     removeEnrollment,
     setLoading,
-    setError
+    setError,
+    toggleShowAllCourses,
+    enrollInCourse,
+    unenrollFromCourse
 } = enrollmentSlice.actions;
 
 export default enrollmentSlice.reducer; 
