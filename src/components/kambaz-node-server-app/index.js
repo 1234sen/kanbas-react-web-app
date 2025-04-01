@@ -24,7 +24,7 @@ const sessionOptions = {
     httpOnly: true,
     sameSite: 'none',
     maxAge: 7 * 24 * 60 * 60 * 1000,
-    domain:'kanbas-react-web-app-jwmi.onrender.com'
+    // domain:'kanbas-react-web-app-jwmi.onrender.com'
      // domain:'eatwhite-a5.netlify.app'
   }// 开发环境设为false，生产环境应为true
 };
@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === "development") {
   // 开发环境使用自签名证书
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 }
-sessionOptions.proxy = true;
+// sessionOptions.proxy = true;
 // if (process.env.NODE_ENV !== "development") {
 //   sessionOptions.proxy = true;
 //   sessionOptions.cookie = {
@@ -52,13 +52,7 @@ app.use(
     exposedHeaders: ['set-cookie'] // 新增暴露set-cookie头
   })
 );
-app.all('*', (req, res, next) => {
-    const origin = req.headers.origin;
-    res.header('Access-Control-Allow-Origin', 'https://eatwhite-a5.netlify.app');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    // 其他CORS相关设置
-    next();
-});
+
 
 app.use(express.json());
 
