@@ -18,7 +18,7 @@ const sessionOptions = {
   secret: process.env.SESSION_SECRET || "kambaz",
   resave: false, // 强制保存未修改的会话
   saveUninitialized: false, // 保存未初始化的会话
-  store: new FileStore(),
+  //store: new FileStore(),
   cookie: {
     secure: false, // 开发环境
     httpOnly: true,
