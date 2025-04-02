@@ -43,7 +43,7 @@ if (process.env.NODE_ENV === "development") {
 // }
 
 const app = express();
-app.use(session(sessionOptions));
+//修改了顺序 本来是先session
 app.use(
   cors({
     credentials: true,
@@ -53,7 +53,7 @@ app.use(
   })
 );
 
-
+app.use(session(sessionOptions));
 app.use(express.json());
 
 Hello(app);
