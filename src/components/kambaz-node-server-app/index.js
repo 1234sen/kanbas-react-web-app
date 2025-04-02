@@ -1,9 +1,6 @@
 import express from 'express'
 import session from "express-session";
 import fileStore from "session-file-store";
-
-// 创建FileStore实例
-const FileStore = fileStore(session);
 import UserRoutes from "./Kambaz/Users/routes.js";
 import cors from "cors";
 import "dotenv/config";
@@ -13,6 +10,19 @@ import AssignmentRoutes from "./Kambaz/Assignments/routes.js";  // 确保导入
 import PeopleRoutes from "./Kambaz/People/routes.js";  // 添加People路由
 import setupEnrollmentRoutes from "./Kambaz/Enrollments/routes.js";  // 添加Enrollment路由
 import Hello from "./Hello.js";
+// 创建FileStore实例
+const FileStore = fileStore(session);
+
+const app = express();
+//修改了顺序 本来是先session
+app.use(
+  cors({
+    credentials: true,
+    // origin: process.env.NETLIFY_URL,
+    origin: 'https://eatwhite-a5.netlify.app',
+    exposedHeaders: ['set-cookie'] // 新增暴露set-cookie头
+  })
+);
 
 const sessionOptions = {
   secret: process.env.SESSION_SECRET || "kambaz",
@@ -28,30 +38,19 @@ const sessionOptions = {
      // domain:'eatwhite-a5.netlify.app'
   }// 开发环境设为false，生产环境应为true
 };
-if (process.env.NODE_ENV === "development") {
-  // 开发环境使用自签名证书
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-}
-// sessionOptions.proxy = true;
-// if (process.env.NODE_ENV !== "development") {
-//   sessionOptions.proxy = true;
-//   sessionOptions.cookie = {
-//     sameSite: "none",
-//     secure: true,
-//     domain: process.env.NODE_SERVER_DOMAIN,
-//   };
+// if (process.env.NODE_ENV === "development") {
+//   // 开发环境使用自签名证书
+//   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 // }
-
-const app = express();
-//修改了顺序 本来是先session
-app.use(
-  cors({
-    credentials: true,
-    // origin: process.env.NETLIFY_URL,
-    origin: 'https://eatwhite-a5.netlify.app',
-    exposedHeaders: ['set-cookie'] // 新增暴露set-cookie头
-  })
-);
+// sessionOptions.proxy = true;
+if (process.env.NODE_ENV !== "development") {
+  sessionOptions.proxy = true;
+  sessionOptions.cookie = {
+    sameSite: "none",
+    secure: true,
+    domain: process.env.NODE_SERVER_DOMAIN,
+  };
+}
 
 app.use(session(sessionOptions));
 app.use(express.json());
