@@ -14,6 +14,47 @@ import PeopleRoutes from "./Kambaz/People/routes.js";  // 添加People路由
 import setupEnrollmentRoutes from "./Kambaz/Enrollments/routes.js";  // 添加Enrollment路由
 import Hello from "./Hello.js";
 
+//ch6
+import mongoose from "mongoose";
+// const CONNECTION_STRING = "mongodb://root:C743B433407BE68EE62C46EDE8FB5A0C@139.196.182.230:27017/kambaz?authSource=admin"|| process.env.MONGO_CONNECTION_STRING 
+const CONNECTION_STRING = "mongodb+srv://atlas-sample-dataset-load-67f0ef4868787c0738994432:mSbyOXpKdN1Zgjb3@cluster0.xejvupe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+// mongodb+srv://atlas-sample-dataset-load-67f0ef4868787c0738994432:mSbyOXpKdN1Zgjb3@cluster0.xejvupe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+mongoose.connect(CONNECTION_STRING);
+
+mongoose.connection.on('connected', () => {
+  console.log('MongoDB连接成功');
+});
+mongoose.connection.on('error', (err) => {
+  console.error('MongoDB连接错误:', err);
+});
+
+
+// const sessionOptions = {
+//   secret: process.env.SESSION_SECRET || "kambaz",
+//   resave: false, // 强制保存未修改的会话
+//   saveUninitialized: false, // 保存未初始化的会话
+//   // store: new FileStore(),
+//   cookie: {
+//     secure: false, // 开发环境
+//     httpOnly: true,
+//     sameSite: 'none',
+//     maxAge: 7 * 24 * 60 * 60 * 1000,
+//     domain: process.env.NODE_ENV === 'development' ?
+//       'localhost' : process.env.NODE_SERVER_DOMAIN
+//   }// 开发环境设为false，生产环境应为true
+// };
+// if (process.env.NODE_ENV === "development") {
+//   // 开发环境使用自签名证书
+//   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+// }
+// if (process.env.NODE_ENV !== "development") {
+//   sessionOptions.proxy = true;
+//   sessionOptions.cookie = {
+//     sameSite: "none",
+//     secure: true,
+//     domain: process.env.NODE_SERVER_DOMAIN,
+//   };
+// }
 const sessionOptions = {
   secret: process.env.SESSION_SECRET || "kambaz",
   resave: false, // 强制保存未修改的会话
@@ -43,11 +84,25 @@ if (process.env.NODE_ENV !== "development") {
 
 const app = express();
 app.use(session(sessionOptions));
+
+const allowedOrigins = [
+  "https://eatwhite-a5test.netlify.app",
+  "http://localhost:5173",
+  "http://localhost:4173",
+  
+];
+
 app.use(
   cors({
     credentials: true,
-    origin: "https://eatwhite-a5.netlify.app",//process.env.NETLIFY_URL || "http://localhost:5173",
-    exposedHeaders: ['set-cookie'] // 新增暴露set-cookie头
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    exposedHeaders: ["set-cookie"], // 新增暴露set-cookie头
   })
 );
 

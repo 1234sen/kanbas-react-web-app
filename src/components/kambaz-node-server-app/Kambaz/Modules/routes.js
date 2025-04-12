@@ -13,17 +13,29 @@ export default function ModuleRoutes(app) {
     });
 
     // Update module
-    app.put("/api/modules/:moduleId", (req, res) => {
+    app.put("/api/modules/:moduleId",async (req, res) => {
         const { moduleId } = req.params;
         const moduleUpdates = req.body;
-        const status = dao.updateModule(moduleId, moduleUpdates);
+        const status = await dao.updateModule(moduleId, moduleUpdates);
         res.json(status);
     });
 
     // Delete module
-    app.delete("/api/modules/:moduleId", (req, res) => {
+    app.delete("/api/modules/:moduleId",async (req, res) => {
         const { moduleId } = req.params;
-        const status = dao.deleteModule(moduleId);
+        const status = await dao.deleteModule(moduleId);
         res.json(status);
     });
+
+    app.post("/api/courses/:courseId/modules", async (req, res) => {
+        const { courseId } = req.params;
+        const module = {
+          ...req.body,
+          course: courseId,
+        };
+        const newModule = await modulesDao.createModule(module);
+        res.send(newModule);
+      });
+     
+
 } 

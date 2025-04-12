@@ -11,9 +11,13 @@ const modulesSlice = createSlice({
     initialState,
     reducers: {
         
-        setModules: (state, action) => {
-            state.modules = action.payload;
-        },
+        // setModules: (state, action) => {
+        //     state.modules = action.payload;
+        // },
+        setModules: (state, { payload: modules }) => {
+            state.modules = modules;
+          },
+       
         addModule: (state, action) => {
             state.modules.push({
                 ...action.payload,
@@ -46,7 +50,9 @@ editModule: (state, action) => {
         }
         return module;
     });
-}
+},
+
+
     }
 });
 

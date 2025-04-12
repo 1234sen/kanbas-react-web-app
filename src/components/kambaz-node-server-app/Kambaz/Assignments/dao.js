@@ -1,51 +1,38 @@
-import Database from "../Database/index.js";
 import { v4 as uuidv4 } from "uuid";
+import model from "./model.js";
 
 // Get all assignments for a course
-export function findAssignmentsForCourse(courseId) {
-    return Database.assignments.filter(
-        (assignment) => assignment.course === courseId
-    );
+export async function findAssignmentsForCourse(courseId) {
+    return model.find({ course: courseId });
 }
 
 // Create new assignment
-export function createAssignment(assignment) {
+export async function createAssignment(assignment) {
     const newAssignment = {
         _id: uuidv4(),
         ...assignment,
         createdAt: new Date().toISOString()
     };
-    Database.assignments.push(newAssignment);
-    return newAssignment;
+    return model.create(newAssignment);
 }
 
 // Update assignment
-export function updateAssignment(aid, assignment) {
-    const index = Database.assignments.findIndex(
-        (a) => a._id === aid
-    );
-    if (index !== -1) {
-        Database.assignments[index] = {
-            ...Database.assignments[index],
+export async function updateAssignment(aid, assignment) {
+    return model.updateOne(
+        { _id: aid },
+        {
             ...assignment,
             updatedAt: new Date().toISOString()
-        };
-        return { status: "OK" };
-    }
-    return { status: "ERROR", message: "Assignment not found" };
+        }
+    );
 }
 
 // Delete assignment
-export function deleteAssignment(aid) {
-    Database.assignments = Database.assignments.filter(
-        (a) => a._id !== aid
-    );
-    return { status: "OK" };
+export async function deleteAssignment(aid) {
+    return model.deleteOne({ _id: aid });
 }
 
 // Get assignment by ID
-export function findAssignmentById(assignmentId) {
-    return Database.assignments.find(
-        (assignment) => assignment._id === assignmentId
-    );
+export async function findAssignmentById(assignmentId) {
+    return model.findOne({ _id: assignmentId });
 } 

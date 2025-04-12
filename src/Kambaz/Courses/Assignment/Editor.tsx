@@ -1,36 +1,32 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { addAssignment, setAssignment, updateAssignment } from "./reducer";
+import { Form, Button, Card } from "react-bootstrap";
 import * as client from "./client";
-import "./editor.css";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const assignmentFromState = useSelector((state: any) => state.assignmentsReducer.assignment);
-  const isNewAssignment = aid === "new";
-
-  const [assignment, setAssignmentLocal] = useState({
+  const [assignment, setAssignment] = useState<any>({
     title: "",
     description: "",
     points: 100,
     dueDate: "",
-    availableFromDate: "",
-    availableUntilDate: "",
-    course: cid
+    availableFrom: "",
+    availableUntil: "",
+    published: false
   });
 
   const fetchAssignment = async () => {
-    if (!isNewAssignment && aid) {
+    if (aid && aid !== "new") {
       try {
         const data = await client.findAssignmentById(aid);
-        setAssignmentLocal(data);
-        dispatch(setAssignment(data));
+        // Format dates for HTML date inputs
+        if (data.dueDate) data.dueDate = data.dueDate.split("T")[0];
+        if (data.availableFrom) data.availableFrom = data.availableFrom.split("T")[0];
+        if (data.availableUntil) data.availableUntil = data.availableUntil.split("T")[0];
+        setAssignment(data);
       } catch (error) {
-        console.error("Failed to fetch assignment", error);
-        navigate(`/Kambaz/Courses/${cid}/Assignments`);
+        console.error("Failed to fetch assignment details:", error);
       }
     }
   };
@@ -41,16 +37,16 @@ export default function AssignmentEditor() {
 
   const handleSave = async () => {
     try {
-      if (isNewAssignment) {
-        const newAssignment = await client.createAssignment(cid!, assignment);
-        dispatch(addAssignment(newAssignment));
+      if (aid === "new") {
+        if (cid) {
+          await client.createAssignment(cid, assignment);
+        }
       } else {
-        const updatedAssignment = await client.updateAssignment(assignment);
-        dispatch(updateAssignment(updatedAssignment));
+        await client.updateAssignment(assignment);
       }
       navigate(`/Kambaz/Courses/${cid}/Assignments`);
     } catch (error) {
-      console.error("Failed to save assignment", error);
+      console.error("Failed to save assignment:", error);
     }
   };
 
@@ -59,94 +55,103 @@ export default function AssignmentEditor() {
   };
 
   const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setAssignmentLocal({
+    const { name, value, type, checked } = e.target;
+    setAssignment({
       ...assignment,
-      [name]: value
+      [name]: type === "checkbox" ? checked : value
     });
   };
 
   return (
-    <div className="wd-assignments-editor">
-      <div className="wd-assignment-name-section">
-        <label>Assignment Name</label>
-        <input
-          className="wd-assignment-name-input"
-          name="title"
-          value={assignment.title}
-          onChange={handleChange}
-        />
-      </div>
+    <Card>
+      <Card.Header>
+        <h3>{aid === "new" ? "Create New Assignment" : "Edit Assignment"}</h3>
+      </Card.Header>
+      <Card.Body>
+        <Form>
+          <Form.Group className="mb-3">
+            <Form.Label>Title</Form.Label>
+            <Form.Control
+              type="text"
+              name="title"
+              value={assignment.title}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
 
-      <div className="wd-assignment-description">
-        <label>Description</label>
-        <textarea
-          className="wd-description-textarea"
-          name="description"
-          value={assignment.description}
-          onChange={handleChange}
-        />
-      </div>
+          <Form.Group className="mb-3">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              name="description"
+              value={assignment.description}
+              onChange={handleChange}
+            />
+          </Form.Group>
 
-      <div className="wd-points-section">
-        <label>Points</label>
-        <input
-          type="number"
-          className="wd-points-input"
-          name="points"
-          value={assignment.points}
-          onChange={handleChange}
-        />
-      </div>
+          <Form.Group className="mb-3">
+            <Form.Label>Points</Form.Label>
+            <Form.Control
+              type="number"
+              name="points"
+              value={assignment.points}
+              onChange={handleChange}
+              min="0"
+            />
+          </Form.Group>
 
-      <div className="wd-assign-section">
-        <h3>Assign</h3>
-        <div className="wd-assign-group">
-          <div className="wd-assign-item">
-            <label>Due Date</label>
-            <input
-              className="wd-text-input"
+          <Form.Group className="mb-3">
+            <Form.Label>Due Date</Form.Label>
+            <Form.Control
+              type="date"
               name="dueDate"
               value={assignment.dueDate}
               onChange={handleChange}
             />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Available From</Form.Label>
+            <Form.Control
+              type="date"
+              name="availableFrom"
+              value={assignment.availableFrom}
+              onChange={handleChange}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Available Until</Form.Label>
+            <Form.Control
+              type="date"
+              name="availableUntil"
+              value={assignment.availableUntil}
+              onChange={handleChange}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Check
+              type="checkbox"
+              label="Published"
+              name="published"
+              checked={assignment.published}
+              onChange={handleChange}
+            />
+          </Form.Group>
+
+          <div className="d-flex justify-content-end">
+            <Button variant="secondary" onClick={handleCancel} className="me-2">
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={handleSave}>
+              Save
+            </Button>
           </div>
-
-          <div className="wd-assign-dates">
-            <div className="wd-assign-item">
-              <label>Available from</label>
-              <div className="wd-date-input-group">
-                <input
-                  className="wd-text-input"
-                  name="availableFromDate"
-                  value={assignment.availableFromDate}
-                  onChange={handleChange}
-                />
-                <button className="wd-calendar-button">📅</button>
-              </div>
-            </div>
-
-            <div className="wd-assign-item">
-              <label>Until</label>
-              <input
-                className="wd-text-input"
-                name="availableUntilDate"
-                value={assignment.availableUntilDate}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="wd-button-group">
-        <button onClick={handleSave} className="wd-button wd-button-save">
-          Save
-        </button>
-        <button onClick={handleCancel} className="wd-button wd-button-cancel">
-          Cancel
-        </button>
-      </div>
-    </div>
+        </Form>
+      </Card.Body>
+    </Card>
   );
-} 
+}

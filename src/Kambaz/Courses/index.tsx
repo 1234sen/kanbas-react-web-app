@@ -25,7 +25,7 @@ export default function Courses({ courses }: { courses: any[]; }) {
         <tbody>
           <tr>
             <td valign="top">
-              <CourseNavigation />
+              <CourseNavigation course={undefined} />
             </td>
             <td valign="top">
               <Routes>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { BsGripVertical } from "react-icons/bs";
@@ -11,22 +11,53 @@ import * as db from "../../Database";
 import { v4 as uuidv4 } from "uuid";
 import { FormControl } from "react-bootstrap"; 
 
-import { addModule,editModule,  updateModule, deleteModule } from "./reducer";
-
-
+import { addModule,editModule,  updateModule, deleteModule,setModules  } from "./reducer";
+import * as courseClient from "../client";
+import * as modulesClient from "./client";
 
 export default function Modules() {
   const { cid } = useParams();
   const [moduleName, setModuleName] = useState("");
   const { modules } = useSelector((state: any) => state.modulesReducer);
   const dispatch = useDispatch();
+
+  const fetchModulesForCourse = async () => {
+    const modules = await courseClient.findModulesForCourse(cid!);
+    dispatch(setModules(modules));
+  };
+
+
+  const addModuleHandler = async () => {
+    const newModule = await courseClient.createModuleForCourse(cid!, {
+      name: moduleName,
+      course: cid,
+    });
+    dispatch(addModule(newModule));
+    setModuleName("");
+    fetchModulesForCourse(); 
+  };
+
+  const deleteModuleHandler = async (moduleId: string) => {
+    await modulesClient.deleteModule(moduleId);
+    dispatch(deleteModule(moduleId));
+    fetchModulesForCourse(); 
+  };
+  const updateModuleHandler = async (module: any) => {
+    await modulesClient.updateModule(module);
+    dispatch(updateModule(module));
+    fetchModulesForCourse();
+  };
+ 
+
+  useEffect(() => {
+    fetchModulesForCourse();
+  }, [cid]);
+ 
+
   return (
     <div>
       <ModulesControls moduleName={moduleName} setModuleName={setModuleName}
-        addModule={() => {
-          dispatch(addModule({ name: moduleName, course: cid }));
-          setModuleName("");
-        }} />
+        addModule={addModuleHandler} />
       <ListGroup id="wd-modules" className="rounded-0">
         {modules
           .filter((module: any) => module.course === cid)
@@ -41,13 +72,12 @@ export default function Modules() {
       { module.editing && (
          <FormControl className="w-50 d-inline-block"
          onChange={(e) =>
-           dispatch(
-             updateModule({ ...module, name: e.target.value })
-           )
+          updateModuleHandler({ ...module, name: e.target.value })
+           
          }
          onKeyDown={(e) => {
            if (e.key === "Enter") {
-             dispatch(updateModule({ ...module, editing: false }));
+            updateModuleHandler({ ...module, editing: false });
            }
          }}
          defaultValue={module.name} />
@@ -55,10 +85,9 @@ export default function Modules() {
       )}
 
 <ModuleControlButtons moduleId={module._id}
-                  deleteModule={(moduleId) => {
-                    dispatch(deleteModule(moduleId));
-                  }}
-                  editModule={(moduleId) => dispatch(editModule(moduleId))} />
+                  deleteModule={(moduleId) => deleteModuleHandler(moduleId)}
+
+                  editModule={(moduleId) => updateModuleHandler(moduleId)} />
 
             </div>
             {module.lessons && (

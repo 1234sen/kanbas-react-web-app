@@ -11,14 +11,17 @@ export default function Dashboard({
     setCourse,
     addNewCourse,
     deleteCourse,
-    updateCourse
+    updateCourse, enrolling, setEnrolling ,updateEnrollment 
+
 }: {
     courses: any[];
     course: any;
     setCourse: (course: any) => void;
     addNewCourse: () => void;
     deleteCourse: (course: any) => void;
-    updateCourse: () => void;
+    updateCourse: (course: any) => void;
+     enrolling: boolean; setEnrolling: (enrolling: boolean) => void;
+     updateEnrollment: (courseId: string, enrolled: boolean) => void 
 }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -40,11 +43,16 @@ export default function Dashboard({
             dispatch(enrollInCourse({ userId: currentUser._id, courseId }));
         }
     };
-    console.log('isStudent', isStudent)
+//     console.log('currentUser:', currentUser);
+// console.log('isStudent:', isStudent);
     return (
         <div id="wd-dashboard">
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <h1>Dashboard</h1>
+                <button onClick={() => setEnrolling(!enrolling)} className="float-end btn btn-primary" >
+          {enrolling ? "My Courses" : "All Courses"}
+        </button>
+
                 {isStudent && (
                     <Button
                         variant="primary"
@@ -73,7 +81,7 @@ export default function Dashboard({
                 {displayedCourses.map((course) => (
                     <Col key={course._id}>
                         <Card>
-                            <Card.Img variant="top" src="/images/reactjs.jpg" />
+                            <Card.Img variant="top" src="../../src/assets/react.jpg" />
                             <Card.Body>
                                 <Card.Title>{course.name}</Card.Title>
                                 <Card.Text>{course.description}</Card.Text>
@@ -83,7 +91,9 @@ export default function Dashboard({
                                             {isEnrolled(course._id) ? (
                                                 <>
                                                     <Button
-                                                        onClick={() => navigate(`/Kambaz/Courses/${course._id}/Home`)}
+                                                        // onClick={() => navigate(`/Kambaz/Courses/${course._id}/Home`)}
+                                                        onClick={() => navigate(`/Kambaz/Courses/${course._id}`)}
+
                                                         variant="primary"
                                                     >
                                                         Go to Course
@@ -108,7 +118,8 @@ export default function Dashboard({
                                     ) : (
                                         <>
                                             <Button
-                                                onClick={() => navigate(`/Kambaz/Courses/${course._id}/Home`)}
+                                                // onClick={() => navigate(`/Kambaz/Courses/${course._id}/Home`)}
+                                                onClick={() => navigate(`/Kambaz/Courses/${course._id}`)}
                                                 variant="primary"
                                             >
                                                 Go to Course
@@ -120,11 +131,19 @@ export default function Dashboard({
                                                 Delete
                                             </Button>
                                             <Button
-                                                onClick={() => setCourse(course)}
+                                                onClick={() => updateCourse(course)}
                                                 variant="warning"
                                             >
                                                 Edit
                                             </Button>
+                                            {enrolling && (
+              <button  onClick={(event) => {
+                event.preventDefault();
+                updateEnrollment(course._id, !course.enrolled);
+              }} className={`btn ${ course.enrolled ? "btn-danger" : "btn-success" } float-end`} >
+                {course.enrolled ? "Unenroll" : "Enroll"}
+              </button>
+            )}
                                         </>
                                     )}
                                 </div>
