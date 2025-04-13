@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Row, Col, Card, Button } from "react-bootstrap";
 // import * as db from "./Database";
-
+import ReactImage from "../assets/react.jpg"
 export default function Dashboard({
   courses,
   course,
@@ -58,7 +58,7 @@ export default function Dashboard({
               {/* <Link to={`/Kambaz/Courses/${course._id}/Home`} */}
               <Link to={`/Kambaz/Courses/${course._id}`}
                 className="wd-dashboard-course-link text-decoration-none text-dark" >
-                <Card.Img src="../../src/assets/react.jpg" variant="top" width="100%" height={160} />
+                <Card.Img src={ReactImage} variant="top" width="100%" height={160} />
                 <Card.Body className="card-body">
                   <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
                     {course.name} </Card.Title>
