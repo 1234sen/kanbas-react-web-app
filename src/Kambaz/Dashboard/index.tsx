@@ -5,7 +5,7 @@ import { Row, Col, Card, Button } from "react-bootstrap";
 import * as db from "../Database";
 import { toggleShowAllCourses, enrollInCourse, unenrollFromCourse } from "../../reducers/enrollmentReducer";
 
-import ReactImage from "../assets/react.jpg"
+import ReactImage from "../assets/react1.jpg"
 
 export default function Dashboard({
     courses,
