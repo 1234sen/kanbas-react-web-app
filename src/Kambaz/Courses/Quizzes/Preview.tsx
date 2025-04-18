@@ -152,7 +152,7 @@ export default function QuizPreview() {
                                 case "FILL_IN_BLANK":
                                     const correctAnswers = question.answers.map((a: any) => a.text);
                                     correctAnswerText = correctAnswers.join(" or ");
-                                    if (correctAnswers.map(a => a.toLowerCase()).includes(userAnswer?.toLowerCase())) {
+                                    if (correctAnswers.map(a: string => a.toLowerCase()).includes(userAnswer?.toLowerCase())) {
                                         isCorrect = true;
                                     }
                                     break;
