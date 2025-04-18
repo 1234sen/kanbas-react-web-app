@@ -1,0 +1,28 @@
+.question-display {
+    padding: 1rem;
+    border: 1px solid #e9ecef;
+    border-radius: 0.25rem;
+    background-color: #f8f9fa;
+  }
+  
+  .timer-display {
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+  
+  .timer-warning {
+    color: #dc3545;
+    animation: pulse 1s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+  }

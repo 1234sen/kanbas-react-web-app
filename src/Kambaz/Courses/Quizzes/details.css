@@ -1,0 +1,14 @@
+.quiz-detail-item {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .quiz-detail-item .property {
+    font-weight: 500;
+    color: #555;
+  }
+  
+  .quiz-detail-item .value {
+    font-weight: 400;
+  }

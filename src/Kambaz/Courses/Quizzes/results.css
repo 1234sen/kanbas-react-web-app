@@ -1,0 +1,19 @@
+.result-summary {
+    padding: 1rem;
+    border: 1px solid #e9ecef;
+    border-radius: 0.25rem;
+    background-color: #f8f9fa;
+  }
+  
+  .user-answer, .correct-answer {
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+  }
+  
+  .user-answer {
+    background-color: #e8f4f8;
+  }
+  
+  .correct-answer {
+    background-color: #d4edda;
+  }

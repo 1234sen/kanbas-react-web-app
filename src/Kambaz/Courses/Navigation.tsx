@@ -15,7 +15,8 @@ export default function CoursesNavigation({ course }: { course: any }) {
     { label: "Home", path: `/Kambaz/Courses/${cid}` },
     { label: "Modules", path: `/Kambaz/Courses/${cid}/Modules` },
     { label: "Assignments", path: `/Kambaz/Courses/${cid}/Assignments` },
-    { label: "People", path: `/Kambaz/Courses/${cid}/People` }, // 添加People导航
+    { label: "Quizzes", path: `/Kambaz/Courses/${cid}/Quizzes` },
+    { label: "People", path: `/Kambaz/Courses/${cid}/People` },
   ];
 
   const { currentUser } = useSelector((state: any) => state.accountReducer);

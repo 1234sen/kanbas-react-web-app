@@ -11,7 +11,7 @@ export default function Dashboard({
     setCourse,
     addNewCourse,
     deleteCourse,
-    updateCourse, enrolling, setEnrolling ,updateEnrollment 
+    updateCourse, enrolling, setEnrolling, updateEnrollment
 
 }: {
     courses: any[];
@@ -20,8 +20,8 @@ export default function Dashboard({
     addNewCourse: () => void;
     deleteCourse: (course: any) => void;
     updateCourse: (course: any) => void;
-     enrolling: boolean; setEnrolling: (enrolling: boolean) => void;
-     updateEnrollment: (courseId: string, enrolled: boolean) => void 
+    enrolling: boolean; setEnrolling: (enrolling: boolean) => void;
+    updateEnrollment: (courseId: string, enrolled: boolean) => void
 }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -31,10 +31,12 @@ export default function Dashboard({
     const isStudent = currentUser?.role === "STUDENT";
     const isEnrolled = (courseId: string) =>
         enrollments.some((e: any) => e.user === currentUser?._id && e.course === courseId);
+    const coursesArray = Array.isArray(courses) ? courses : [];
 
     const displayedCourses = isStudent && !showAllCourses
-        ? courses.filter(course => isEnrolled(course._id))
-        : courses;
+        ? coursesArray.filter(course => isEnrolled(course._id))
+        : coursesArray;
+
 
     const handleEnrollToggle = (courseId: string) => {
         if (isEnrolled(courseId)) {
@@ -43,15 +45,15 @@ export default function Dashboard({
             dispatch(enrollInCourse({ userId: currentUser._id, courseId }));
         }
     };
-//     console.log('currentUser:', currentUser);
-// console.log('isStudent:', isStudent);
+    //     console.log('currentUser:', currentUser);
+    // console.log('isStudent:', isStudent);
     return (
         <div id="wd-dashboard">
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <h1>Dashboard</h1>
                 <button onClick={() => setEnrolling(!enrolling)} className="float-end btn btn-primary" >
-          {enrolling ? "My Courses" : "All Courses"}
-        </button>
+                    {enrolling ? "My Courses" : "All Courses"}
+                </button>
 
                 {isStudent && (
                     <Button
@@ -76,9 +78,9 @@ export default function Dashboard({
                 </div>
             )}
 
-            <h2>Published Courses ({displayedCourses.length})</h2>
+            <h2>Published Courses ({displayedCourses?.length})</h2>
             <Row xs={1} md={3} lg={4} className="g-4">
-                {displayedCourses.map((course) => (
+                {displayedCourses?.map((course) => (
                     <Col key={course._id}>
                         <Card>
                             <Card.Img variant="top" src="../../src/assets/react.jpg" />
@@ -137,13 +139,13 @@ export default function Dashboard({
                                                 Edit
                                             </Button>
                                             {enrolling && (
-              <button  onClick={(event) => {
-                event.preventDefault();
-                updateEnrollment(course._id, !course.enrolled);
-              }} className={`btn ${ course.enrolled ? "btn-danger" : "btn-success" } float-end`} >
-                {course.enrolled ? "Unenroll" : "Enroll"}
-              </button>
-            )}
+                                                <button onClick={(event) => {
+                                                    event.preventDefault();
+                                                    updateEnrollment(course._id, !course.enrolled);
+                                                }} className={`btn ${course.enrolled ? "btn-danger" : "btn-success"} float-end`} >
+                                                    {course.enrolled ? "Unenroll" : "Enroll"}
+                                                </button>
+                                            )}
                                         </>
                                     )}
                                 </div>
