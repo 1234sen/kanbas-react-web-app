@@ -1,6 +1,47 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface Answer {
+    text: string;
+    isCorrect: boolean;
+}
+
+interface Question {
+    _id: string;
+    title?: string;
+    questionType: "MULTIPLE_CHOICE" | "TRUE_FALSE" | "FILL_IN_BLANK";
+    points: number;
+    question: string;
+    answers: Answer[];
+}
+
+interface Quiz {
+    _id?: string;
+    title: string;
+    description: string;
+    quizType: string;
+    assignmentGroup: string;
+    shuffleAnswers: boolean;
+    timeLimit: number;
+    multipleAttempts: boolean;
+    attemptsAllowed: number;
+    showCorrectAnswers: boolean;
+    accessCode: string;
+    oneQuestionAtATime: boolean;
+    webcamRequired: boolean;
+    lockQuestionsAfterAnswering: boolean;
+    questions: Question[];
+}
+
+interface QuizzesState {
+    quizzes: Quiz[];
+    quiz: Quiz;
+    currentQuestion: Question | null;
+    quizAttempt: any | null;
+    loading: boolean;
+    error: string | null;
+}
+
+const initialState: QuizzesState = {
     quizzes: [],
     quiz: {
         title: "New Quiz",
