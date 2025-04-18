@@ -5,12 +5,43 @@ import { FaArrowLeft, FaCheck, FaTimes } from "react-icons/fa";
 import * as client from "./client";
 import "./results.css";
 
+// 添加类型定义
+interface QuestionAnswer {
+    questionId: string;
+    answer: string;
+}
+
+interface QuizQuestion {
+    _id: string;
+    question: string;
+    questionType: "MULTIPLE_CHOICE" | "TRUE_FALSE" | "FILL_IN_BLANK";
+    points: number;
+    answers: {
+        text: string;
+        isCorrect: boolean;
+    }[];
+}
+
+interface QuizData {
+    _id: string;
+    title: string;
+    questions: QuizQuestion[];
+}
+
+interface AttemptData {
+    _id: string;
+    score: number;
+    maxScore: number;
+    completedAt: string;
+    answers: QuestionAnswer[];
+}
+
 export default function QuizResults() {
     const { cid, qid, attemptId } = useParams();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
-    const [quizData, setQuizData] = useState<any>(null);
-    const [attemptData, setAttemptData] = useState<any>(null);
+    const [quizData, setQuizData] = useState<QuizData | null>(null);
+    const [attemptData, setAttemptData] = useState<AttemptData | null>(null);
     const [error, setError] = useState("");
 
     useEffect(() => {
@@ -18,11 +49,16 @@ export default function QuizResults() {
             try {
                 setLoading(true);
 
-                const quizData = await client.findQuizById(qid);
-                setQuizData(quizData);
+                // 添加类型检查，确保qid和attemptId不为undefined
+                if (qid && attemptId) {
+                    const quizData = await client.findQuizById(qid);
+                    setQuizData(quizData);
 
-                const attemptData = await client.findQuizAttemptById(attemptId);
-                setAttemptData(attemptData);
+                    const attemptData = await client.findQuizAttemptById(attemptId);
+                    setAttemptData(attemptData);
+                } else {
+                    setError("Quiz ID or Attempt ID is missing");
+                }
             } catch (error) {
                 console.error("Failed to fetch data:", error);
                 setError("Failed to load quiz results. Please try again.");
@@ -108,8 +144,8 @@ export default function QuizResults() {
 
                     <h5 className="mb-3">Answers</h5>
 
-                    {quizData.questions.map((question: any, index: number) => {
-                        const userAnswer = attemptData.answers.find((a: any) => a.questionId === question._id);
+                    {quizData.questions.map((question: QuizQuestion, index: number) => {
+                        const userAnswer = attemptData.answers.find((a: QuestionAnswer) => a.questionId === question._id);
                         const answer = userAnswer ? userAnswer.answer : null;
 
                         let isCorrect = false;
