@@ -60,6 +60,20 @@ export default function Signin() {
         className="btn btn-primary w-100 mb-2">
         Sign in
       </Button>
+
+      <div className="mt-3">
+        <div>name: sen jiang</div>
+        <div>
+          <a href="https://github.com/1234sen/kanbas-react-web-app/tree/project" target="_blank" rel="noopener noreferrer">
+            https://github.com/1234sen/kanbas-react-web-app/tree/project
+          </a>
+        </div>
+        <div>
+          <a href="https://github.com/1234sen/nodeserver_1_3" target="_blank" rel="noopener noreferrer">
+            https://github.com/1234sen/nodeserver_1_3
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
