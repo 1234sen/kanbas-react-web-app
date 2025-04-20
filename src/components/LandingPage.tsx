@@ -18,6 +18,21 @@ function LandingPage() {
         Welcome to Kambaz Application
       </h1>
       <Link to="/labs" style={{ textDecoration: "none", color: "#666666", height: "21px" }}>Lab Exercises</Link>
+   
+     <div className="mt-3">
+        <div>name: sen jiang</div>
+        <div>
+          <a href="https://github.com/1234sen/kanbas-react-web-app/tree/project" target="_blank" rel="noopener noreferrer">
+            https://github.com/1234sen/kanbas-react-web-app/tree/project
+          </a>
+        </div>
+        <div>
+          <a href="https://github.com/1234sen/nodeserver_1_3" target="_blank" rel="noopener noreferrer">
+            https://github.com/1234sen/nodeserver_1_3
+          </a>
+        </div>
+      </div>
+    
     </div>
   );
 }
